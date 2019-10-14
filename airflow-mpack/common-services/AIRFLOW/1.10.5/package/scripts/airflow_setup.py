@@ -115,13 +115,46 @@ WantedBy=multi-user.target
 
 
 	# Apply changes to systemd
-	Execute(('systemctl', 'daemon-reload'), 
+	Execute(('systemctl', 'daemon-reload'),
 	    sudo=True)
 
+def airflow_make_systemd_scripts_kerberos():
+	confFileText = format("""[Unit]
+Description=Airflow kerberos ticket renewer
+After=network.target postgresql.service mysql.service redis.service rabbitmq-server.service
+Wants=postgresql.service mysql.service redis.service rabbitmq-server.service
+
+[Service]
+EnvironmentFile=/etc/sysconfig/airflow
+Environment="AIRFLOW_HOME={airflow_home}"
+User={airflow_user}
+Group={airflow_group}
+Type=simple
+ExecStart=/usr/local/bin/airflow kerberos -D --pid {airflow_kerberos_pid_file} --stderr {airflow_log_dir}/kerberos-err.log --stdout {airflow_log_dir}/kerberos-out.log -l {airflow_log_dir}/kerberos-log.log
+PIDFile={airflow_kerberos_pid_file}
+Restart=on-failure
+RestartSec=5s
+PrivateTmp=False
+StandardOutput=syslog+console
+SyslogIdentifier=airflow-kerberos
+
+[Install]
+WantedBy=multi-user.target
+""")
+
+	File("/etc/systemd/system/airflow-kerberos.service",
+	    mode=0644,
+	    owner=params.airflow_user,
+	    group=params.airflow_group,
+	    content=confFileText
+	)
 
 def airflow_make_systemd_scripts_worker(env):
 	import params
 	env.set_params(params)
+
+        if params.security_enabled:
+            airflow_make_systemd_scripts_kerberos()
 
 	confFileText = format("""[Unit]
 Description=Airflow worker daemon

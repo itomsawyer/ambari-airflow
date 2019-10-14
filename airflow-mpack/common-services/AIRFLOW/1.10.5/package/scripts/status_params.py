@@ -29,4 +29,5 @@ airflow_pid_dir = config['configurations']['airflow-env']['airflow_pid_dir']
 airflow_webserver_pid_file = config['configurations']['airflow-env']['airflow_pid_dir'] + '/webserver.pid'
 airflow_scheduler_pid_file = config['configurations']['airflow-env']['airflow_pid_dir'] + '/scheduler.pid'
 airflow_worker_pid_file = config['configurations']['airflow-env']['airflow_pid_dir'] + '/worker.pid'
+airflow_kerberos_pid_file = config['configurations']['airflow-env']['airflow_pid_dir'] + '/kerberos.pid'
 airflow_flower_pid_file = config['configurations']['airflow-env']['airflow_pid_dir'] + '/flower.pid'

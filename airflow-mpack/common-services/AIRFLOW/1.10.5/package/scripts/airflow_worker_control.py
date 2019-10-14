@@ -7,7 +7,7 @@ from airflow_setup import *
 
 class AirflowWorker(Script):
 	"""
-	Contains the interface definitions for methods like install, 
+	Contains the interface definitions for methods like install,
 	start, stop, status, etc. for the Airflow Server
 	"""
 	def install(self, env):
@@ -82,7 +82,7 @@ if $programname  == 'airflow-worker' then {airflow_log_dir}/worker.log
 		env.set_params(params)
 		airflow_configure(env)
 		airflow_make_systemd_scripts_worker(env)
-		
+
 	def start(self, env):
 		import params
 		self.configure(env)
@@ -90,6 +90,11 @@ if $programname  == 'airflow-worker' then {airflow_log_dir}/worker.log
                     sudo=True)
                 Execute(('systemctl', 'start', 'airflow-worker'),
                     sudo=True)
+                if params.security_enabled:
+                    Execute(('systemctl', 'enable', 'airflow-kerberos'),
+                        sudo=True)
+                    Execute(('systemctl', 'start', 'airflow-kerberos'),
+                        sudo=True)
 
 	def stop(self, env):
 		import params
@@ -101,11 +106,22 @@ if $programname  == 'airflow-worker' then {airflow_log_dir}/worker.log
 		File(params.airflow_worker_pid_file,
 			action = "delete")
 
+                if params.security_enabled:
+                    Execute(('systemctl', 'stop', 'airflow-kerberos'),
+                        sudo=True)
+                    Execute(('systemctl', 'disable', 'airflow-kerberos'),
+                        sudo=True)
+                    File(params.airflow_kerberos_pid_file,
+                            action = "delete")
+
 	def status(self, env):
+                import params
 		import status_params
 		env.set_params(status_params)
 		#use built-in method to check status using pidfile
 		check_process_status(status_params.airflow_worker_pid_file)
+                if params.security_enabled:
+                    check_process_status(status_params.airflow_kerberos_pid_file)
 
 if __name__ == "__main__":
 	AirflowWorker().execute()
