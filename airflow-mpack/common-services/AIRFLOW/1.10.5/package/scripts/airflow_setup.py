@@ -119,6 +119,7 @@ WantedBy=multi-user.target
 	    sudo=True)
 
 def airflow_make_systemd_scripts_kerberos():
+        import params
 	confFileText = format("""[Unit]
 Description=Airflow kerberos ticket renewer
 After=network.target postgresql.service mysql.service redis.service rabbitmq-server.service

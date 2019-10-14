@@ -41,7 +41,13 @@ cluster_name = str(config['clusterName'])
 ambari_server_hostname = config['clusterHostInfo']['ambari_server_host'][0]
 security_enabled = config['configurations']['cluster-env']['security_enabled']
 
-airflow_home = config['configurations']['airflow-core-site']['airflow_home']
+airflow_home = "/usr/local/airflow"
+try:
+    if config['configurations']['airflow-core-site']['airflow_home'] and config['configurations']['airflow-core-site']['airflow_home'] != "":
+        airflow_home = config['configurations']['airflow-core-site']['airflow_home']
+except:
+    pass
+
 airflow_user = config['configurations']['airflow-env']['airflow_user']
 airflow_group = config['configurations']['airflow-env']['airflow_group']
 airflow_log_dir = config['configurations']['airflow-env']['airflow_log_dir']
