@@ -49,4 +49,8 @@ ambari-server start
 ![Deploy](https://github.com/sburn/ambari-airflow/blob/master/Screenshots/10.PNG)
 
 
+## Features
+
+* enable kerberos renewer along with all airflow workers when Ambari cluster kerberos security is enabled.
+
 ### Enjoy!
