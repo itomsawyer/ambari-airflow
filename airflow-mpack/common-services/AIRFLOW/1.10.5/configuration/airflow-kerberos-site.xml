@@ -25,7 +25,7 @@
   </property>
   <property>
     <name>principal</name>
-    <value>airflow</value>
+    <value>airflow/_HOST</value>
     <display-name>principal</display-name>
     <description></description>
   </property>
