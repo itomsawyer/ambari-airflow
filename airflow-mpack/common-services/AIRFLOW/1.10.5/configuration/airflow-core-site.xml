@@ -18,12 +18,12 @@
 <configuration supports_final="true">
   <!--Configuration options for user authentication into the web application-->
 
-  <!-- property>
+  <property>
     <name>airflow_home</name>
     <value>/usr/local/airflow</value>
     <display-name>Airflow home</display-name>
-    <description>The home folder for airflow, default is airflow_install_dir/airflow.</description>
-  </property -->
+    <description>The home folder for airflow, default is /usr/local/airflow </description>
+  </property>
   <property>
     <name>dags_folder</name>
     <value>~/airflow/dags</value>

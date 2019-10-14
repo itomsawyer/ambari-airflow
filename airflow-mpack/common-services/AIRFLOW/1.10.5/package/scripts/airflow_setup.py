@@ -25,7 +25,7 @@ User={airflow_user}
 Group={airflow_group}
 Environment="AIRFLOW_HOME={airflow_home}"
 Type=simple
-ExecStart=/usr/local/bin/airflow scheduler -D --pid {airflow_scheduler_pid_file} --stderr {airflow_log_dir}/scheduler-err.log --stdout {airflow_log_dir}/scheduler-out.log -l {airflow_log_dir}/scheduler-log.log"
+ExecStart=/usr/local/bin/airflow scheduler -D --pid {airflow_scheduler_pid_file} --stderr {airflow_log_dir}/scheduler-err.log --stdout {airflow_log_dir}/scheduler-out.log -l {airflow_log_dir}/scheduler-log.log
 PIDFile={airflow_scheduler_pid_file}
 Restart=on-failure
 RestartSec=5s
@@ -64,7 +64,7 @@ User={airflow_user}
 Group={airflow_group}
 Environment="AIRFLOW_HOME={airflow_home}"
 Type=simple
-ExecStart=/usr/local/bin/airflow webserver -D --pid {airflow_webserver_pid_file} --stderr {airflow_log_dir}/webserver-err.log --stdout {airflow_log_dir}/webserver-out.log -l {airflow_log_dir}/webserver-log.log"
+ExecStart=/usr/local/bin/airflow webserver -D --pid {airflow_webserver_pid_file} --stderr {airflow_log_dir}/webserver-err.log --stdout {airflow_log_dir}/webserver-out.log -l {airflow_log_dir}/webserver-log.log
 PIDFile={airflow_webserver_pid_file}
 Restart=on-failure
 RestartSec=5s
@@ -94,7 +94,7 @@ User={airflow_user}
 Group={airflow_group}
 Environment="AIRFLOW_HOME={airflow_home}"
 Type=simple
-ExecStart=/usr/local/bin/airflow flower -D --pid {airflow_flower_pid_file} --stderr {airflow_log_dir}/flower-err.log --stdout {airflow_log_dir}/flower-out.log -l {airflow_log_dir}/flower-log.log"
+ExecStart=/usr/local/bin/airflow flower -D --pid {airflow_flower_pid_file} --stderr {airflow_log_dir}/flower-err.log --stdout {airflow_log_dir}/flower-out.log -l {airflow_log_dir}/flower-log.log
 PIDFile={airflow_flower_pid_file}
 Restart=on-failure
 RestartSec=5s
@@ -133,7 +133,7 @@ User={airflow_user}
 Group={airflow_group}
 Environment="AIRFLOW_HOME={airflow_home}"
 Type=simple
-ExecStart=/usr/local/bin/airflow worker -D --pid {airflow_worker_pid_file} --stderr {airflow_log_dir}/worker-err.log --stdout {airflow_log_dir}/worker-out.log -l {airflow_log_dir}/worker-log.log"
+ExecStart=/usr/local/bin/airflow worker -D --pid {airflow_worker_pid_file} --stderr {airflow_log_dir}/worker-err.log --stdout {airflow_log_dir}/worker-out.log -l {airflow_log_dir}/worker-log.log
 PIDFile={airflow_worker_pid_file}
 Restart=on-failure
 RestartSec=5s

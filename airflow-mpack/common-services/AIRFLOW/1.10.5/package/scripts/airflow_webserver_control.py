@@ -82,9 +82,7 @@ if $programname  == 'airflow-flower' then {airflow_log_dir}/flower.log
                 )
 
 		# Initialize Airflow database
-		Execute('/usr/local/bin/airflow initdb'),
-			user=params.airflow_user,
-			environment={'AIRFLOW_HOME': params.airflow_home})
+		Execute('/usr/local/bin/airflow initdb', user=params.airflow_user, environment={'AIRFLOW_HOME': params.airflow_home})
 
 	def configure(self, env):
 		import params

@@ -63,9 +63,7 @@ if $programname  == 'airflow-scheduler' then {airflow_log_dir}/scheduler.log
 		    """))
 
 		# Initialize Airflow database
-		Execute('/usr/local/bin/airflow initdb',
-			user=params.airflow_user,
-			environment={'AIRFLOW_HOME': params.airflow_home})
+		Execute('/usr/local/bin/airflow initdb', user=params.airflow_user, environment={'AIRFLOW_HOME': params.airflow_home})
 
 		Logger.info('Setting up Rabbitmq-server')
 
