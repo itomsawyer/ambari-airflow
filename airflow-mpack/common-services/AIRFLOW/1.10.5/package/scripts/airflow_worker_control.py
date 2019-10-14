@@ -83,6 +83,24 @@ if $programname  == 'airflow-worker' then {airflow_log_dir}/worker.log
 		airflow_configure(env)
 		airflow_make_systemd_scripts_worker(env)
 
+                # Add logrotate and apply
+                File("/etc/logrotate.d/airflow",
+                    mode=0644,
+                    owner=params.airflow_user,
+                    group=params.airflow_group,
+                    content=format("""
+{airflow_log_dir}/*.log
+{{
+    missingok
+    daily
+    copytruncate
+    rotate 7
+    notifempty
+}}
+                    """)
+                )
+
+
 	def start(self, env):
 		import params
 		self.configure(env)
